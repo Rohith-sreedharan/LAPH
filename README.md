@@ -45,8 +45,11 @@ pip install -r requirements.txt
 
 Pull the default model (recommended):
 ollama pull qwen3:14b
+
 ollama pull qwen3:4b
+
 ollama pull llava-llama3:8b
+
 ollama pull qwen2.5-coder:7b-instruct
 
 Configure your model endpoint in:
