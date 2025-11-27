@@ -1,6 +1,11 @@
 L.A.P.H. — Local Autonomous Programming Helper
 
-One-liner: Offline, local, multi-model autonomous agent that generates, executes, and self-debugs Python code. (Linux-only for now — because Arch btw.)
+🧠 What L.A.P.H. Actually Is (Full Corporate Jargon Mode):
+A locally-hosted, multi-agent, self-reflexive autonomous programming framework capable of continuous code generation, execution, validation, and correction through iterative feedback cycles, leveraging decentralized LLM orchestration, dynamic error-driven model routing, and fully offline compute workflows.
+
+🍼 What That Means in Human Words:
+A lil AI homie who writes code, runs it, sees if it exploded, learns from the explosion, and tries again.
+(Linux-only for now — because Arch btw.)
 
 🚀 Vision
 L.A.P.H. is designed as a fully offline, privacy-preserving, developer-grade AI agent that:
@@ -46,11 +51,5 @@ core/llm_interface.py
 
 Run the agent:
 python3 core/main.py
-
-🧠 What L.A.P.H. Actually Is (Full Corporate Jargon Mode):
-A locally-hosted, multi-agent, self-reflexive autonomous programming framework capable of continuous code generation, execution, validation, and correction through iterative feedback cycles, leveraging decentralized LLM orchestration, dynamic error-driven model routing, and fully offline compute workflows.
-
-🍼 What That Means in Human Words:
-A lil AI homie who writes code, runs it, sees if it exploded, learns from the explosion, and tries again.
 
 📅 Date Started: 17 November 2025
