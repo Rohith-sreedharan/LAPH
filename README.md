@@ -1,4 +1,4 @@
-#### L.A.P.H. — Local Autonomous Programming Helper
+### L.A.P.H. — Local Autonomous Programming Helper
 
 ## 🧠 What L.A.P.H. Actually Is (Full Corporate Jargon Mode):
 A locally-hosted, multi-agent, self-reflexive autonomous programming framework capable of continuous code generation, execution, validation, and correction through iterative feedback cycles, leveraging decentralized LLM orchestration, dynamic error-driven model routing, and fully offline compute workflows.
@@ -7,7 +7,7 @@ A locally-hosted, multi-agent, self-reflexive autonomous programming framework c
 A lil AI homie who writes code, runs it, sees if it exploded, learns from the explosion, and tries again.
 (Linux-only for now — because Arch btw.)
 
-### 🚀 Vision
+## 🚀 Vision
 L.A.P.H. is designed as a fully offline, privacy-preserving, developer-grade AI agent that:
 1. Writes code
 2. Runs code
