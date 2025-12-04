@@ -7,10 +7,14 @@ def main():
         root = tk.Tk()
         app = LAPH_GUI(root)
         root.mainloop()
+    elif len(sys.argv) > 1 and sys.argv[1] == "--clear-logs":
+        from core.logger import Logger
+        Logger().clear()
+        print("L.A.P.H. logs cleared.")
     else:
         from core.repair_loop import RepairLoop
         print("=== L.A.P.H. — Local Autonomous Programming Helper ===")
-        task = input("\nDescribe the program you want L.A.P.H. to build\n> ")
+        task = input("\nDescribe the program you want L.A.P.H. to build:\n> ")
         agent = RepairLoop()
         final_code = agent.run_task(task)
         if final_code:
