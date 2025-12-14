@@ -21,7 +21,7 @@ class RepairLoop:
         self.prompts = PromptManager()
         self.logger = Logger()
 
-    def run_task(self, task: str, max_iters=10):
+    def run_task(self, task: str, max_iters=20):
         # Load state if exists
         state_path = "state.txt"
         code = None

@@ -14,40 +14,49 @@ class LAPH_GUI:
         self.setup_widgets()
 
     def setup_widgets(self):
-        style = tb.Style("cyborg")  # More modern dark theme
+        style = tb.Style("superhero")  # Brighter, modern dark theme
 
-        frame = tb.Frame(self.root, padding=30, bootstyle="secondary")
-        frame.pack(fill="both", expand=True, padx=30, pady=30)
+        frame = tb.Frame(self.root, padding=0, bootstyle="dark")
+        frame.pack(fill="both", expand=True)
 
-        # Title with shadow effect
-        title_frame = tb.Frame(frame, bootstyle="secondary")
-        title_frame.pack(pady=(0, 10))
-        tb.Label(title_frame, text="L.A.P.H.", font=("Orbitron", 38, "bold"), bootstyle=PRIMARY).pack()
-        tb.Label(title_frame, text="Local Autonomous Programming Helper", font=("Segoe UI", 14, "italic"), bootstyle="info").pack()
+        # Title area
+        title_frame = tb.Frame(frame, bootstyle="dark")
+        title_frame.pack(pady=(20, 5))
+        tb.Label(title_frame, text="L.A.P.H.", font=("Orbitron", 40, "bold"), bootstyle=PRIMARY).pack()
+        tb.Label(title_frame, text="Local Autonomous Programming Helper", font=("Segoe UI", 15, "italic"), bootstyle="info").pack()
 
-        # Card-like input area (no rounded-pill for Frame)
-        input_card = tb.Frame(frame, padding=20, bootstyle="info")
-        input_card.pack(pady=10, fill="x")
-        tb.Label(input_card, text="Describe the program you want L.A.P.H. to build:", font=("Segoe UI", 14, "bold"), bootstyle="inverse-info").pack(anchor="w", pady=(0, 8))
-        self.task_entry = tb.Entry(input_card, width=70, font=("Segoe UI", 13))
-        self.task_entry.pack(pady=5, padx=5, ipady=6, fill="x")
+        # Card-like input area
+        input_card = tb.Frame(frame, padding=24, bootstyle="info")
+        input_card.pack(pady=18, padx=40, fill="x")
+        tb.Label(input_card, text="Describe your program:", font=("Segoe UI", 15, "bold"), bootstyle="inverse-info").pack(anchor="w", pady=(0, 10))
+        
+        # New LabeledEntry for Max Iterations
+        max_iters_frame = tb.Frame(input_card, bootstyle="info")
+        max_iters_frame.pack(fill="x", pady=(0, 10))
+        tb.Label(max_iters_frame, text="Max Iterations:", font=("Segoe UI", 12, "bold"), bootstyle="inverse-info").pack(side="left", anchor="w")
+        self.max_iters_entry = tb.Entry(max_iters_frame, width=10, font=("Fira Sans", 12))
+        self.max_iters_entry.insert(0, "10")  # Default value
+        self.max_iters_entry.pack(side="left", padx=5)
+
+        self.task_entry = tb.Entry(input_card, width=70, font=("Fira Sans", 14))
+        self.task_entry.pack(pady=6, padx=2, ipady=8, fill="x")
 
         # Button row
         button_row = tb.Frame(input_card, bootstyle="info")
-        button_row.pack(pady=10, fill="x")
-        self.run_button = tb.Button(button_row, text="🚀 Run Task", bootstyle="success-outline rounded-pill", command=self.run_task_thread, width=18)
-        self.run_button.pack(side="left", padx=(0, 10))
-        tb.Button(button_row, text="🎲 Dice Roller Example", bootstyle="warning-outline rounded-pill", command=self.fill_dice_prompt, width=22).pack(side="left")
+        button_row.pack(pady=12, fill="x")
+        self.run_button = tb.Button(button_row, text="🚀 Run Task", bootstyle="success", command=self.run_task_thread, width=18)
+        self.run_button.pack(side="left", padx=(0, 12))
+        tb.Button(button_row, text="🎲 Dice Roller Example", bootstyle="warning", command=self.fill_dice_prompt, width=22).pack(side="left")
 
         # Status label
-        self.status_label = tb.Label(input_card, text="Idle", font=("Segoe UI", 12, "bold"), bootstyle="primary rounded-pill")
-        self.status_label.pack(pady=5, anchor="w")
+        self.status_label = tb.Label(input_card, text="Idle", font=("Fira Sans", 12, "bold"), bootstyle="primary")
+        self.status_label.pack(pady=7, anchor="w")
 
-        # Output area in a card (no rounded-pill for Frame)
+        # Output area
         output_card = tb.Frame(frame, padding=18, bootstyle="dark")
-        output_card.pack(pady=18, fill="both", expand=True)
-        tb.Label(output_card, text="Generated Code Output", font=("Segoe UI", 13, "bold"), bootstyle="inverse-dark").pack(anchor="w", pady=(0, 8))
-        self.output_box = scrolledtext.ScrolledText(output_card, width=100, height=22, font=("Fira Mono", 12), bg="#181c20", fg="#e0e0e0", insertbackground="#e0e0e0", borderwidth=0, relief="flat")
+        output_card.pack(pady=(18, 0), padx=40, fill="both", expand=True)
+        tb.Label(output_card, text="Generated Code Output", font=("Fira Sans", 13, "bold"), bootstyle="inverse-dark").pack(anchor="w", pady=(0, 8))
+        self.output_box = scrolledtext.ScrolledText(output_card, width=100, height=20, font=("Fira Mono", 13), bg="#181c20", fg="#e0e0e0", insertbackground="#e0e0e0", borderwidth=2, relief="groove")
         self.output_box.pack(pady=5, fill="both", expand=True)
 
         # Add subtle drop shadow to main window (if supported)
@@ -70,6 +79,10 @@ class LAPH_GUI:
 
     def run_task(self):
         task = self.task_entry.get()
+        try:
+            max_iters = int(self.max_iters_entry.get())
+        except ValueError:
+            max_iters = 10  # Default to 10 if input is invalid
         self.status_label.config(text="Running...", bootstyle=WARNING)
         self.output_box.delete(1.0, "end")
         final_code = self.agent.run_task(task)
