@@ -29,7 +29,7 @@ class LAPH_GUI:
         input_card = tb.Frame(frame, padding=20, bootstyle="info")
         input_card.pack(pady=10, fill="x")
         tb.Label(input_card, text="Describe the program you want L.A.P.H. to build:", font=("Segoe UI", 14, "bold"), bootstyle="inverse-info").pack(anchor="w", pady=(0, 8))
-        self.task_entry = tb.Entry(input_card, width=70, font=("Segoe UI", 13), bootstyle="rounded-pill")
+        self.task_entry = tb.Entry(input_card, width=70, font=("Segoe UI", 13))
         self.task_entry.pack(pady=5, padx=5, ipady=6, fill="x")
 
         # Button row
