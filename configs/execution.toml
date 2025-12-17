@@ -1,0 +1,29 @@
+# Execution Configuration for Code Runner
+# These settings control resource limits for executing generated code
+
+[resource_limits]
+# CPU time limit in seconds
+cpu_limit = 5
+
+# Memory limit in megabytes
+memory_limit_mb = 256
+
+# Process timeout in seconds (should be > cpu_limit)
+timeout = 8
+
+[retry]
+# Initial retry delay in seconds
+initial_delay = 1
+
+# Maximum retry delay in seconds (for exponential backoff)
+max_delay = 10
+
+# Whether to enable exponential backoff on retries
+exponential_backoff = true
+
+[llm]
+# Default timeout for LLM requests in seconds
+request_timeout = 300
+
+# Whether to use connection pooling
+connection_pooling = true

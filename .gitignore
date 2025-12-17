@@ -3,3 +3,5 @@ core/__pycache__/
 logs/laph.log
 state.txt
 .directory
+__pycache__/
+*.pyc

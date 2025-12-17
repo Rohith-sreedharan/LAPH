@@ -128,8 +128,23 @@ class LAPH_GUI:
 
     def run_task(self):
         task = self.task_entry.get()
+        
+        # Validate task input
+        if not task or not task.strip():
+            self.logger.log("ERROR: Task description cannot be empty.")
+            self.status_label.config(text="Error: Empty task", bootstyle=DANGER)
+            self.run_button.config(state="normal")
+            self.example_button.config(state="normal")
+            return
+        
+        # Validate max iterations
         try:
             max_iters = int(self.max_iters_entry.get())
+            if max_iters < 1:
+                raise ValueError("Must be positive")
+            if max_iters > 100:
+                self.logger.log("WARNING: Max iterations is very high (>100), capping at 100.")
+                max_iters = 100
         except ValueError:
             max_iters = 10
             self.logger.log("Invalid max iterations value, defaulting to 10.")
