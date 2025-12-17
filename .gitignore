@@ -2,5 +2,6 @@ ONLY FOR ME.txt
 core/__pycache__/
 logs/laph.log
 state.txt
-.directory__pycache__/
+.directory
+__pycache__/
 *.pyc
