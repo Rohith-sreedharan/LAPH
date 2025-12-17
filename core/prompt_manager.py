@@ -8,8 +8,13 @@ class PromptManager:
         self.prompts['coder'] = self._load_prompt('prompts/coder_prompt.txt')
 
     def _load_prompt(self, path):
-        with open(path, 'r') as f:
-            return f.read()
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                return f.read()
+        except FileNotFoundError:
+            raise FileNotFoundError(f"Prompt file not found: {path}. Please ensure all prompt files exist.")
+        except Exception as e:
+            raise RuntimeError(f"Error loading prompt from {path}: {e}")
 
     def build_thinker(self, task, code=None, error=None):
         return self.prompts['thinker'] + f"\n\nTask: {task}\n" + (f"Previous code: {code}\n" if code else "") + (f"Error: {error}\n" if error else "")

@@ -9,17 +9,18 @@ class CodeRunner:
         """
         Execute Python code in a temporary file with resource limits.
         """
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".py") as f:
-            f.write(code.encode())
-            temp_path = f.name
-
-        def set_limits():
-            # Limit CPU time to 5 seconds
-            resource.setrlimit(resource.RLIMIT_CPU, (5, 5))
-            # Limit memory to 256MB
-            resource.setrlimit(resource.RLIMIT_AS, (256 * 1024 * 1024, 256 * 1024 * 1024))
-
+        temp_path = None
         try:
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".py", mode='w') as f:
+                f.write(code)
+                temp_path = f.name
+
+            def set_limits():
+                # Limit CPU time to 5 seconds
+                resource.setrlimit(resource.RLIMIT_CPU, (5, 5))
+                # Limit memory to 256MB
+                resource.setrlimit(resource.RLIMIT_AS, (256 * 1024 * 1024, 256 * 1024 * 1024))
+
             result = subprocess.run(
                 ["python3", temp_path],
                 stdout=subprocess.PIPE,
@@ -27,11 +28,18 @@ class CodeRunner:
                 timeout=8,
                 preexec_fn=set_limits
             )
-            stdout = result.stdout.decode()
-            stderr = result.stderr.decode()
-            os.remove(temp_path)
+            stdout = result.stdout.decode(errors='replace')
+            stderr = result.stderr.decode(errors='replace')
             return stdout, stderr, result.returncode
 
+        except subprocess.TimeoutExpired:
+            return "", "[Execution Error] Code execution timed out after 8 seconds", -1
         except Exception as e:
-            os.remove(temp_path)
             return "", f"[Execution Error] {e}", -1
+        finally:
+            # Always cleanup temp file
+            if temp_path and os.path.exists(temp_path):
+                try:
+                    os.remove(temp_path)
+                except OSError:
+                    pass  # Best effort cleanup
